@@ -4,19 +4,22 @@ import time
 from notifications.Notifications import Notifications
 from outputs.TerminalOutput import TerminalOutput
 
+from services.gmail import Gmail
+from services.slack import Slack
+
 
 def main():
     ns = Notifications()
     o = TerminalOutput(ns)
-    ns.register('slack', 2)
-    ns.register('gmail', 14)
+
+    gmail = Gmail(ns)
+    slack = Slack(ns)
 
     for i in range(10):
-        ns.update('slack', ns.get_badge('slack') + 1)
-        ns.update('gmail', ns.get_badge('gmail') - 1)
+        gmail.refresh()
+        slack.refresh()
 
         o.refresh()
-        ns.register('hubblehq', 12)
         time.sleep(0.5)
 
 
