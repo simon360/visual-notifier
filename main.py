@@ -15,12 +15,15 @@ def main():
     gmail = Gmail(ns)
     slack = Slack(ns)
 
-    for i in range(10):
-        gmail.refresh()
-        slack.refresh()
+    try:
+        while True:
+            gmail.refresh()
+            slack.refresh()
 
-        o.refresh()
-        time.sleep(0.5)
+            o.refresh()
+            time.sleep(0.5)
+    except KeyboardInterrupt:
+        print('\n\nExiting.\n')
 
 
 if __name__ == "__main__":
