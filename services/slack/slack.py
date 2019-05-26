@@ -1,5 +1,6 @@
 import json
 import os
+import slack
 import sys
 
 
@@ -20,6 +21,19 @@ class Slack:
             tokens = json.load(token_file)
             self.access_token = tokens["access_token"]
 
+        # pylint: disable=no-member
+        self.client = slack.WebClient(token=self.access_token)
+
+        channels_request = self.client.channels_list()
+        self.all_channels = [
+            channel['id'] for channel in channels_request['channels']]
+
     def refresh(self):
-        self.badge = self.badge + 1
+        self.badge = 0
+
+        for channel in self.all_channels:
+            info = self.client.channels_info(channel=channel)
+            if info['ok'] and info['channel']['unread_count'] > 0:
+                self.badge += info['channel']['unread_count']
+
         self.ns.update('slack', self.badge)
