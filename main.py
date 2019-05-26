@@ -6,7 +6,7 @@ from notifications.Notifications import Notifications
 from outputs.TerminalOutput import TerminalOutput
 
 from services.gmail.gmail import Gmail
-from services.slack import Slack
+from services.slack.slack import Slack
 
 
 def main():
@@ -15,7 +15,8 @@ def main():
 
     gmail = Gmail(ns, os.path.join(
         os.path.dirname(__file__), 'services_config/gmail'))
-    slack = Slack(ns)
+    slack = Slack(ns, os.path.join(
+        os.path.dirname(__file__), 'services_config/slack'))
 
     try:
         while True:
