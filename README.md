@@ -10,6 +10,12 @@ Currently, configuration is highly manual.
 
 See [the service configuration README.md](services_config/gmail/README.md).
 
+### Slack
+
+See [the service configuration README.md](services_config/slack/README.md).
+
+Get OAuth tokens by running `FLASK_APP=slack_auth_server.py python3 -m flask run -h localhost -p 5172`, and following the instructions.
+
 ## Running
 
 Requires Python 3.
